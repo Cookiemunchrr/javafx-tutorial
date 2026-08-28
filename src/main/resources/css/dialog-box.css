@@ -1,0 +1,62 @@
+.label {
+    -fx-background-color: linear-gradient(to bottom right, #00ffbf, #00ddff);
+    -fx-border-color: #d55e00 #009e73 #cc79a7 #0072b2;
+    -fx-border-width: 2px;
+    -fx-background-radius: 1em 1em 0 1em;
+    -fx-border-radius: 1em 1em 0 1em;
+}
+
+.reply-label {
+    -fx-background-radius: 1em 1em 1em 0;
+    -fx-border-radius: 1em 1em 1em 0;
+}
+
+/*
+ * One class per kind of command, added on top of .reply-label by DialogBox.changeDialogStyle.
+ *
+ * These must stay BELOW .label and .reply-label in this file. A style class and an element
+ * class have the same specificity in JavaFX CSS, so when both set -fx-background-color the
+ * one declared last wins -- not the one added last in Java. Only the colour is overridden
+ * here; the borders and corner radii keep coming from .label and .reply-label above.
+ */
+.add-label {
+    -fx-background-color: yellow;
+}
+
+.marked-label {
+    -fx-background-color: palegreen;
+}
+
+.unmarked-label {
+    -fx-background-color: khaki;
+}
+
+.delete-label {
+    -fx-background-color: lightpink;
+}
+
+.list-label {
+    -fx-background-color: lightskyblue;
+}
+
+.find-label {
+    -fx-background-color: plum;
+}
+
+.error-label {
+    -fx-background-color: lightcoral;
+}
+
+
+#displayPicture {
+    /* Shadow effect on image. */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 5, 5);
+
+    /* Change size of image. */
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+
+    /* Rotate image clockwise by degrees. */
+    -fx-rotate: 0;
+}
+

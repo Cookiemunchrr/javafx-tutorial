@@ -41,6 +41,15 @@ java {
 }
 
 shadowJar {
-    archiveBaseName = "javafx-tutorial-duke"
+    archiveBaseName = "quu"
     archiveClassifier = null
+}
+
+// Runs the chatbot in the terminal instead of the GUI, using the same Quu class.
+tasks.register('runCli', JavaExec) {
+    group = 'application'
+    description = 'Runs Quu as a text UI in the terminal.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass.set('quu.Quu')
+    standardInput = System.in
 }

@@ -1,0 +1,165 @@
+package quu.ui;
+
+import quu.task.Task;
+import quu.task.TaskList;
+
+/**
+ * Builds every message the program shows the user.
+ *
+ * <p>Each method returns its message as a {@code String} rather than printing it, so that
+ * the same wording can be reused by more than one front end: the terminal version prints
+ * the returned text, while the JavaFX version puts it inside a dialog box. Keeping all
+ * wording in one class means a message can be reworded in a single place, and the rest of
+ * the program never needs to know how a task is rendered.
+ */
+public class Ui {
+    private static final String BANNER =
+              "  ___\n"
+            + " / _ \\ _   _ _   _\n"
+            + "| | | | | | | | | |\n"
+            + "| |_| | |_| | |_| |\n"
+            + " \\__\\_\\\\__,_|\\__,_|\n";
+
+    /**
+     * Returns the program's ASCII-art logo.
+     *
+     * <p>Only the terminal front end uses this; the logo relies on a fixed-width font,
+     * which the GUI's dialog boxes do not use.
+     *
+     * @return the logo
+     */
+    public String getBanner() {
+        return BANNER;
+    }
+
+    /**
+     * Returns the opening greeting.
+     *
+     * @param name the name the chatbot introduces itself by
+     * @return the greeting
+     */
+    public String getGreeting(String name) {
+        return String.format("Hello! I'm %s.%nWhat can I do for you?", name);
+    }
+
+    /**
+     * Returns the confirmation that a task was added.
+     *
+     * @param task the task that was added
+     * @param size the number of tasks now in the list
+     * @return the confirmation message
+     */
+    public String getAdded(Task task, int size) {
+        return String.format("Got it. I've added this task:%n  %s%nNow you have %d tasks in the list.",
+                task, size);
+    }
+
+    /**
+     * Returns the confirmation that a task was removed.
+     *
+     * @param task the task that was removed
+     * @param size the number of tasks left in the list
+     * @return the confirmation message
+     */
+    public String getRemoved(Task task, int size) {
+        return String.format("Noted. I've removed this task:%n %s%nNow you have %d tasks in the list.",
+                task, size);
+    }
+
+    /**
+     * Returns the confirmation that a task was marked as done.
+     *
+     * @param task the task that was marked
+     * @return the confirmation message
+     */
+    public String getMarked(Task task) {
+        return String.format("Nice! I've marked this task as done:%n %s", task);
+    }
+
+    /**
+     * Returns the confirmation that a task was marked as not done.
+     *
+     * @param task the task that was unmarked
+     * @return the confirmation message
+     */
+    public String getUnmarked(Task task) {
+        return String.format("OK, I've marked this task as not done yet:%n %s", task);
+    }
+
+    /**
+     * Returns every task in the list, numbered from one.
+     *
+     * @param taskList the tasks to render
+     * @return the heading followed by the numbered tasks
+     */
+    public String getList(TaskList taskList) {
+        return "Here are the tasks in your list:" + buildNumberedList(taskList);
+    }
+
+    /**
+     * Returns the tasks that matched a search, numbered from one.
+     *
+     * @param taskList the matching tasks
+     * @return the heading followed by the numbered tasks
+     */
+    public String getFound(TaskList taskList) {
+        return "Here are the matching tasks in your list:" + buildNumberedList(taskList);
+    }
+
+    /**
+     * Returns the message carried by an exception.
+     *
+     * @param e the exception to report
+     * @return the exception's message
+     */
+    public String getException(Exception e) {
+        return e.getMessage();
+    }
+
+    /**
+     * Returns a report that tasks could not be saved to disk.
+     *
+     * @param message the detail to show the user
+     * @return the report
+     */
+    public String getSaveError(String message) {
+        return message;
+    }
+
+    /**
+     * Returns a report that tasks could not be loaded from disk.
+     *
+     * @param message the detail to show the user
+     * @return the report
+     */
+    public String getLoadingError(String message) {
+        return message;
+    }
+
+    /**
+     * Returns the farewell shown when the user exits.
+     *
+     * @return the farewell
+     */
+    public String getGoodbye() {
+        return "Bye. Hope to see you again soon!";
+    }
+
+    /**
+     * Builds the numbered lines for a task list, each on its own new line.
+     *
+     * <p>Shared by {@link #getList(TaskList)} and {@link #getFound(TaskList)} so the two
+     * differ only in their heading. Returns an empty string for an empty list, which
+     * leaves the heading standing alone.
+     *
+     * @param taskList the tasks to render
+     * @return the numbered lines, each prefixed by a line separator
+     */
+    private String buildNumberedList(TaskList taskList) {
+        StringBuilder lines = new StringBuilder();
+        for (int i = 0; i < taskList.getSize(); i++) {
+            lines.append(String.format("%n%d.%s", i + 1, taskList.getTaskAt(i)));
+        }
+        return lines.toString();
+    }
+}
